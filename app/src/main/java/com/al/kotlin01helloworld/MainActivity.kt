@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         var count = 0
 
+        // 参数只有一个，可以用 it
         btnTest.setOnClickListener {
             // 闭包：访问外部变量
             count++
@@ -31,6 +32,9 @@ class MainActivity : AppCompatActivity() {
             // this -> Activity 对象
             // Toast.makeText(this,"$count",Toast.LENGTH_SHORT).show()
             showToast(this, "$count")
+
+            // as “不安全的”转换操作符，失败抛异常
+            (it as Button).text = "我被扁了 $count 次 :-("
         }
 
         val btnDialog: Button = findViewById(R.id.btnDialog)
