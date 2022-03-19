@@ -14,6 +14,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        myLog("hello log!")
+
         tvInfo = findViewById(R.id.tvInfo)
         val btnTest: Button = findViewById(R.id.btnTest)
 
@@ -25,6 +27,9 @@ class MainActivity : AppCompatActivity() {
             // 闭包：访问外部变量
             count++
             tvInfo.text = "current count is $count"
+            // this -> Activity 对象
+            // Toast.makeText(this,"$count",Toast.LENGTH_SHORT).show()
+            showToast(this, "$count")
         }
     }
 }
