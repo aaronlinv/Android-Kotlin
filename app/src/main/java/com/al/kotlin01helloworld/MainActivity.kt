@@ -1,5 +1,6 @@
 package com.al.kotlin01helloworld
 
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -50,6 +51,22 @@ class MainActivity : AppCompatActivity() {
                 }
                 .create()
                 .show()
+        }
+
+        val btnChangeColor: Button = findViewById(R.id.btnChangeColor)
+        myLog("btnChangeColor -> $btnChangeColor")
+
+        btnChangeColor.setOnClickListener {
+            val btn: Button = (it as Button)
+            myLog("btn -> $btn")
+            // 直接改外部引用不可以吗？事实上也可以，打印的地址值也相同
+            val currentTextColor = btn.currentTextColor
+
+            if (currentTextColor == Color.BLUE) {
+                btn.setTextColor(Color.RED)
+            } else {
+                btn.setTextColor(Color.BLUE)
+            }
         }
     }
 }
