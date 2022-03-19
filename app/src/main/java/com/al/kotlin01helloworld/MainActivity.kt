@@ -3,6 +3,7 @@ package com.al.kotlin01helloworld
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -30,6 +31,21 @@ class MainActivity : AppCompatActivity() {
             // this -> Activity 对象
             // Toast.makeText(this,"$count",Toast.LENGTH_SHORT).show()
             showToast(this, "$count")
+        }
+
+        val btnDialog: Button = findViewById(R.id.btnDialog)
+        btnDialog.setOnClickListener {
+            // 建造者设计模式
+            // 静态内部类
+            AlertDialog.Builder(this)
+                .setPositiveButton("Ok") { _, which ->
+                    tvInfo.text = "OK"
+                }
+                .setNegativeButton("Cancel") { _, which ->
+                    tvInfo.text = "Canceled"
+                }
+                .create()
+                .show()
         }
     }
 }
