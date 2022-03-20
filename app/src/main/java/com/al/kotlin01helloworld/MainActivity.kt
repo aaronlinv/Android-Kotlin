@@ -1,8 +1,8 @@
 package com.al.kotlin01helloworld
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageView
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -15,15 +15,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val btnChange: Button = findViewById(R.id.btnChange)
-        val imageView: ImageView = findViewById(R.id.imageView)
+        tvInfo = findViewById(R.id.tvInfo)
+        tvInfo.text = "未选中菜单"
+    }
 
-        val imageList = mutableListOf<Int>(R.drawable.mountain, R.drawable.forst)
-        var count = 1
-        btnChange.setOnClickListener {
-            count++
-            imageView.setImageResource(imageList.get(count % imageList.size))
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        //  AppCompatActivity 对象提供
+        menuInflater.inflate(R.menu.my_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menusOpen -> tvInfo.text = "打开"
+            R.id.menuSave -> tvInfo.text = "保存"
         }
-
+        return super.onOptionsItemSelected(item)
     }
 }
