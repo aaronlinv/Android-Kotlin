@@ -1,10 +1,9 @@
 package com.al.kotlin01helloworld
 
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -16,57 +15,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        myLog("hello log!")
+        val btnChange: Button = findViewById(R.id.btnChange)
+        val imageView: ImageView = findViewById(R.id.imageView)
 
-        tvInfo = findViewById(R.id.tvInfo)
-        val btnTest: Button = findViewById(R.id.btnTest)
-
-        tvInfo.text = "hello world"
-
-        var count = 0
-
-        // 参数只有一个，可以用 it
-        btnTest.setOnClickListener {
-            // 闭包：访问外部变量
+        val imageList = mutableListOf<Int>(R.drawable.mountain, R.drawable.forst)
+        var count = 1
+        btnChange.setOnClickListener {
             count++
-            tvInfo.text = "current count is $count"
-            // this -> Activity 对象
-            // Toast.makeText(this,"$count",Toast.LENGTH_SHORT).show()
-            showToast(this, "$count")
-
-            // as “不安全的”转换操作符，失败抛异常
-            (it as Button).text = "我被扁了 $count 次 :-("
+            imageView.setImageResource(imageList.get(count % imageList.size))
         }
 
-        val btnDialog: Button = findViewById(R.id.btnDialog)
-        btnDialog.setOnClickListener {
-            // 建造者设计模式
-            // 静态内部类
-            AlertDialog.Builder(this)
-                .setPositiveButton("Ok") { _, which ->
-                    tvInfo.text = "OK"
-                }
-                .setNegativeButton("Cancel") { _, which ->
-                    tvInfo.text = "Canceled"
-                }
-                .create()
-                .show()
-        }
-
-        val btnChangeColor: Button = findViewById(R.id.btnChangeColor)
-        myLog("btnChangeColor -> $btnChangeColor")
-
-        btnChangeColor.setOnClickListener {
-            val btn: Button = (it as Button)
-            myLog("btn -> $btn")
-            // 直接改外部引用不可以吗？事实上也可以，打印的地址值也相同
-            val currentTextColor = btn.currentTextColor
-
-            if (currentTextColor == Color.BLUE) {
-                btn.setTextColor(Color.RED)
-            } else {
-                btn.setTextColor(Color.BLUE)
-            }
-        }
     }
 }
