@@ -14,8 +14,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <!--启动Intent 可以用setAction 指定这个值，实现消息定向发送-->
-                <action android:name="com.al.test" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
