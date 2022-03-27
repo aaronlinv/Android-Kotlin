@@ -8,5 +8,8 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        // 隐藏 ActionBar
+        supportActionBar?.hide()
+
     }
 }
