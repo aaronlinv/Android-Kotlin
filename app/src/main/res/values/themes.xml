@@ -1,8 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Kotlin01HelloWorld" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <!--解决 Android Studio 按钮颜色无法修改问题解决-->
+    <style name="Theme.Kotlin01HelloWorld" parent="Theme.MaterialComponents.DayNight.DarkActionBar.Bridge">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/light_dark_green</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
