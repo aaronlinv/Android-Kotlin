@@ -1,5 +1,6 @@
 package com.al.kotlin01helloworld
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
@@ -18,10 +19,14 @@ class SecondActivity : AppCompatActivity() {
         // Activity 提供的对象
         val name = intent.getStringExtra(MainActivity.NAME_KEY)
         val age = intent.getIntExtra(MainActivity.AGE_KEY, 0)
-        val user = intent.getParcelableExtra<User>(MainActivity.OBJECT_KEY)
 
         myLog("name:$name")
         myLog("age:$age")
-        myLog("user:$user")
+
+        val intent = Intent().putExtra(ONE_ACTIVITY_RESULT_KEY, "Aaron")
+
+        // 传递数据回去
+        setResult(RESULT_OK, intent)
+        finish()
     }
 }
