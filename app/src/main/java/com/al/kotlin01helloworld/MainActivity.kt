@@ -7,7 +7,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
-    private var counter = 0
+    // 伴生对象，类似 Java 静态成员变量
+    companion object {
+        var globalCount: Int = 0
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -19,18 +23,8 @@ class MainActivity : AppCompatActivity() {
         val etCount: EditText = findViewById(R.id.editText)
 
         btnCount.setOnClickListener {
-            counter++
-            tvCount.text = "计数值：$counter"
+            globalCount++
+            tvCount.text = "计数值：$globalCount"
         }
-        if (savedInstanceState != null) {
-            tvCount.text = "计数值：${savedInstanceState.get("counter")}"
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        // 保存实例数据
-        outState.putInt("counter", counter)
-        myLog("计数值保存：$counter")
     }
 }
