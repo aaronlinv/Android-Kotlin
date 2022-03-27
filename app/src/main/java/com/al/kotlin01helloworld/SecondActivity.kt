@@ -5,13 +5,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 
-class MainActivity : BaseActivity() {
+class SecondActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        // 隐藏 ActionBar
-        supportActionBar?.hide()
+        setContentView(R.layout.activity_second)
 
         val tvInfo: TextView = findViewById(R.id.textViewInfo)
         val btnStartNewActivity: Button = findViewById(R.id.buttonStart)
