@@ -14,7 +14,7 @@ import android.widget.Toast
  */
 
 // 类外部定义的 顶层属性 顶层函数 整个项目可用
-val TAG = "MainActivity"
+val TAG = "Lifecycle"
 
 // Any 类似 Java 的 Object，? 代表可空
 fun myLog(info: Any?) {
