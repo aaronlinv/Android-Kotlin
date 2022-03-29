@@ -11,44 +11,8 @@
         android:name="com.al.kotlin01helloworld.BlankFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonUseArgument"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/buttonUseArgument"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="使用 Argument"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUseMethod"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUseFactoryMethod"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buttonUseMethod"
-        app:layout_constraintTop_toTopOf="@+id/buttonUseMethod" />
-
-    <Button
-        android:id="@+id/buttonUseFactoryMethod"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="工厂方法"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUseArgument"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buttonUseArgument"
-        app:layout_constraintTop_toTopOf="@+id/buttonUseArgument" />
-
-    <Button
-        android:id="@+id/buttonUseMethod"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="24dp"
-        android:text="Fragment方法"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUseArgument"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

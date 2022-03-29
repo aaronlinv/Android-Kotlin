@@ -1,10 +1,7 @@
 package com.al.kotlin01helloworld
 
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-
-const val MESSAGE_KEY = "MESSAGE_KEY"
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,36 +11,5 @@ class MainActivity : AppCompatActivity() {
         // 隐藏 ActionBar
         supportActionBar?.hide()
 
-        val btnUseMethod = findViewById<Button>(R.id.buttonUseMethod)
-        btnUseMethod.setOnClickListener {
-            val fragment = BlankFragment()
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, fragment)
-                .commit()
-            // 方式1. 通过 Fragment 方法传递信息
-            fragment.receiveMessage("方式1. 通过 Fragment 方法传递信息")
-        }
-        val btnUseArgument = findViewById<Button>(R.id.buttonUseArgument)
-        btnUseArgument.setOnClickListener {
-            // 方式2. 通过 Bundle 传递信息
-            val argument = Bundle()
-            argument.putString(MESSAGE_KEY, "方式2. 通过 Bundle 传递信息")
-            val fragmentOfArg = BlankFragment()
-            fragmentOfArg.arguments = argument
-
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, fragmentOfArg)
-                .commit()
-        }
-
-        val btnUseFactoryMethod = findViewById<Button>(R.id.buttonUseFactoryMethod)
-        btnUseFactoryMethod.setOnClickListener {
-            val fragmentFactoryMethodFragment =
-                FactoryMethodFragment.newInstance("方式3.", "Android 默认创建 Fragment 的 工厂方法")
-
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, fragmentFactoryMethodFragment)
-                .commit()
-        }
     }
 }
