@@ -11,6 +11,5 @@ class MainActivity : AppCompatActivity() {
         // 隐藏 ActionBar
         supportActionBar?.hide()
 
-        lifecycle.addObserver(MyLifecycleObserver())
     }
 }
