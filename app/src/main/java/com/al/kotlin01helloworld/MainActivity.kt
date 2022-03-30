@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
     private lateinit var tvCount: TextView
     private lateinit var btnAdd: Button
-    private val myClass = MyClass()
+    private val myClass = MyTimer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -19,10 +19,9 @@ class MainActivity : AppCompatActivity() {
         tvCount = findViewById(R.id.tvCount)
         btnAdd = findViewById(R.id.btnAdd)
         btnAdd.setOnClickListener {
-            myClass.addCount()
         }
-        myClass.counter.observe(this) {
-            tvCount.text = it.toString()
+        myClass.currentTimeStrings.observe(this) {
+            tvCount.text = it
         }
     }
 }
