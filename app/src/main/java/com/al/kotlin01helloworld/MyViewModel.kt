@@ -1,10 +1,8 @@
 package com.al.kotlin01helloworld
 
-import android.app.Application
-import android.widget.Toast
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
 /**
  * <pre>
@@ -14,12 +12,10 @@ import androidx.lifecycle.MutableLiveData
  *     version: 1.0
  * </pre>
  */
-// ViewModel 对象需要 Context 时，可以使用 ViewModel 的子类 AndroidViewModel
-class MyViewModel(private val app: Application) : AndroidViewModel(app) {
-
-
-    val appDescription: LiveData<String> =
-        MutableLiveData<String>(app.getString(R.string.app_name))
+class MyViewModel(number: Int) : ViewModel() {
+    private val _score = MutableLiveData<Int>(number)
+    val score: LiveData<Int>
+        get() = _score
 
     init {
         myLog("ViewModel 创建")
@@ -30,10 +26,7 @@ class MyViewModel(private val app: Application) : AndroidViewModel(app) {
         myLog("ViewModel 销毁")
     }
 
-
-    // 使用 Context 示例
-    fun showToast() {
-        Toast.makeText(app, appDescription.value, Toast.LENGTH_SHORT)
-            .show()
+    fun changeScore(value: Int) {
+        _score.postValue(value)
     }
 }

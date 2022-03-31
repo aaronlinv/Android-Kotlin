@@ -1,6 +1,5 @@
 package com.al.kotlin01helloworld
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
@@ -12,11 +11,10 @@ import androidx.lifecycle.ViewModelProvider
  *     version: 1.0
  * </pre>
  */
-class MyViewModelFactory(private val app: Application) :
-    ViewModelProvider.Factory {
+class MyViewModelFactory(val number: Int) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MyViewModel::class.java)) {
-            return MyViewModel(app) as T
+            return MyViewModel(number) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
