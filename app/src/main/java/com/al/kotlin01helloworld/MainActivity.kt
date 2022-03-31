@@ -20,10 +20,11 @@ class MainActivity : AppCompatActivity() {
         // 隐藏 ActionBar
         supportActionBar?.hide()
 
-        // viewModel = ViewModelProvider(this)
-        //     .get(MyViewModel::class.java)
-
-        val myViewModelFactory = MyViewModelFactory(100);
+        // 方式 1，如果 MyViewModel 是两个参数（其中一个是 Application）可能会报错
+        viewModel = ViewModelProvider(this)
+            .get(MyViewModel::class.java)
+        // 方式 2
+        val myViewModelFactory = MyViewModelFactory(application);
         viewModel = ViewModelProvider(this, myViewModelFactory)
             .get(MyViewModel::class.java)
 
@@ -31,11 +32,11 @@ class MainActivity : AppCompatActivity() {
         tvCount = findViewById(R.id.tvCount)
         btnAdd = findViewById(R.id.btnAdd)
         btnAdd.setOnClickListener {
-            val initValue = viewModel.score.value!!
-            viewModel.changeScore(initValue + 1)
+            viewModel.showToast()
         }
-        viewModel.score.observe(this) {
-            tvCount.text = it.toString()
+        viewModel.appDescription.observe(this) {
+            tvCount.text = it
         }
+
     }
 }
