@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModel
  *     version: 1.0
  * </pre>
  */
-class MyViewModel : ViewModel() {
-    private val _score = MutableLiveData<Int>(0)
+class MyViewModel(number: Int) : ViewModel() {
+    private val _score = MutableLiveData<Int>(number)
     val score: LiveData<Int>
         get() = _score
 

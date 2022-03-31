@@ -10,6 +10,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvCount: TextView
     private lateinit var btnAdd: Button
     private lateinit var viewModel: MyViewModel
+    private lateinit var viewModelFactory: MyViewModelFactory
     private val myClass = MyClass()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,8 +20,13 @@ class MainActivity : AppCompatActivity() {
         // 隐藏 ActionBar
         supportActionBar?.hide()
 
-        viewModel = ViewModelProvider(this)
+        // viewModel = ViewModelProvider(this)
+        //     .get(MyViewModel::class.java)
+
+        val myViewModelFactory = MyViewModelFactory(100);
+        viewModel = ViewModelProvider(this, myViewModelFactory)
             .get(MyViewModel::class.java)
+
 
         tvCount = findViewById(R.id.tvCount)
         btnAdd = findViewById(R.id.btnAdd)
