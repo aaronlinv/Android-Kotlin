@@ -10,7 +10,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvCount: TextView
     private lateinit var btnAdd: Button
     private lateinit var viewModel: MyViewModel
-    private val myClass = MyClass()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -21,15 +20,5 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)
             .get(MyViewModel::class.java)
-
-        tvCount = findViewById(R.id.tvCount)
-        btnAdd = findViewById(R.id.btnAdd)
-        btnAdd.setOnClickListener {
-            val initValue = viewModel.score.value!!
-            viewModel.changeScore(initValue + 1)
-        }
-        viewModel.score.observe(this) {
-            tvCount.text = it.toString()
-        }
     }
 }
