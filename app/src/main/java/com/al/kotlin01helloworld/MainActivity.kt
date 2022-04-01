@@ -2,13 +2,13 @@ package com.al.kotlin01helloworld
 
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var tvCount: TextView
     private lateinit var btnAdd: Button
-    private val myClass = MyClass()
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -16,13 +16,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         // 隐藏 ActionBar
         supportActionBar?.hide()
-        tvCount = findViewById(R.id.tvCount)
-        btnAdd = findViewById(R.id.btnAdd)
+        btnAdd = findViewById(R.id.btnNavigate)
+        val hostFragment: NavHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
+        navController = hostFragment.navController
+
         btnAdd.setOnClickListener {
-            myClass.addCount()
-        }
-        myClass.counter.observe(this) {
-            tvCount.text = it.toString()
+            // 导航可以用目的地id、Action id
+            // navController.navigate(R.id.secondFragment)
+
+            // 还可以跳转 Activity
+            navController.navigate(R.id.otherActivity)
         }
     }
 }
