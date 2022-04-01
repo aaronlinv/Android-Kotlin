@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 
 class MainActivity : AppCompatActivity() {
     private lateinit var tvCount: TextView
     private lateinit var btnAdd: Button
-    private lateinit var viewModel: MyViewModel
+    private val myClass = MyClass()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -17,8 +16,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         // 隐藏 ActionBar
         supportActionBar?.hide()
-
-        viewModel = ViewModelProvider(this)
-            .get(MyViewModel::class.java)
+        tvCount = findViewById(R.id.tvCount)
+        btnAdd = findViewById(R.id.btnAdd)
+        btnAdd.setOnClickListener {
+            myClass.addCount()
+        }
+        myClass.counter.observe(this) {
+            tvCount.text = it.toString()
+        }
     }
 }
