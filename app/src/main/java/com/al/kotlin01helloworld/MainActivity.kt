@@ -10,6 +10,5 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         // 隐藏 ActionBar
         supportActionBar?.hide()
-
     }
 }

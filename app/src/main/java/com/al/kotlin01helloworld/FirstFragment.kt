@@ -5,33 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import java.util.*
-
-val MESSAGE_KEY = "MESSAGE_KEY"
+import kotlin.system.exitProcess
 
 class FirstFragment : Fragment() {
-    private lateinit var tvRandom: TextView
-    private lateinit var btnAdd: Button
+    private lateinit var btnStartWizard: Button
+    private lateinit var btnExit: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_first, container, false)
-        tvRandom = root.findViewById(R.id.tvRandom)
-        btnAdd = root.findViewById(R.id.btnSend)
+        btnStartWizard = root.findViewById(R.id.btnRunWizard)
+        btnExit = root.findViewById(R.id.BtnExit)
 
         val navController = findNavController()
-        btnAdd.setOnClickListener {
-
-            val ranNumber = Random().nextInt(100)
-            // 根据 navigation 视图的配置自动生成代码
-            val action = FirstFragmentDirections.actionFirstFragment2ToSecondFragment2(ranNumber)
-
-            navController.navigate(action)
+        btnStartWizard.setOnClickListener {
+            navController.navigate(R.id.action_firstFragment2_to_secondFragment2)
+        }
+        btnExit.setOnClickListener {
+            exitProcess(0)
         }
         return root
     }
