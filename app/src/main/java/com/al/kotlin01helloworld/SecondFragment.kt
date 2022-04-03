@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -21,16 +22,23 @@ class SecondFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         root = inflater.inflate(R.layout.fragment_second, container, false)
-        btnBack = root.findViewById(R.id.btnStart)
+        btnBack = root.findViewById(R.id.btnBack)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val tvShow = root.findViewById<TextView>(R.id.tvShow)
+
+        // 可以从 Bundle 直接获取
+        // val message = arguments?.getInt("number") ?: "无"
+        // tvShow.text = message.toString()
+
+        tvShow.text = myArgs.number.toString()
 
         btnBack.setOnClickListener {
             val navController = findNavController()
-            navController.navigate(R.id.action_secondFragment2_to_step1Fragment)
+            navController.navigate(R.id.firstFragment2)
         }
     }
 }
