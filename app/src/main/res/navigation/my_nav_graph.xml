@@ -18,9 +18,5 @@
         android:id="@+id/secondFragment2"
         android:name="com.al.kotlin01helloworld.SecondFragment"
         android:label="fragment_second"
-        tools:layout="@layout/fragment_second">
-        <action
-            android:id="@+id/action_secondFragment2_to_firstFragment2"
-            app:destination="@id/firstFragment2" />
-    </fragment>
+        tools:layout="@layout/fragment_second" />
 </navigation>
