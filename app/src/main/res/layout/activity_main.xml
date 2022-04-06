@@ -8,8 +8,8 @@
     <data>
 
         <variable
-            name="myName"
-            type="com.al.kotlin01helloworld.MyName" />
+            name="imageUrl"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,28 +18,42 @@
         tools:context=".MainActivity">
 
         <TextView
-            android:id="@+id/tvName"
+            android:id="@+id/tvUrl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@={myName.name}"
+            android:layout_marginTop="32dp"
+            android:text="@={imageUrl}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLoad" />
+
+        <Button
+            android:id="@+id/btnLoad"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:text="装载"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvNickname"
+        <ImageView
+            android:id="@+id/ivImage"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="51dp"
-            android:text="@={myName.nickname}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_height="0dp"
+            android:layout_marginTop="84dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+            app:layout_constraintTop_toBottomOf="@+id/tvUrl"
+            app:showImage="@{imageUrl}"
+
+            app:srcCompat="@drawable/mountain" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
