@@ -18,28 +18,27 @@
         tools:context=".MainActivity">
 
         <TextView
-            android:id="@+id/tvName"
+            android:id="@+id/tvShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@={myName.name}"
+            android:layout_marginTop="32dp"
+            android:text="0"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvNickname"
+        <Button
+            android:id="@+id/btnClick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="51dp"
-            android:text="@={myName.nickname}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_marginTop="32dp"
+            android:text="累加"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+            app:layout_constraintTop_toBottomOf="@+id/tvShow" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

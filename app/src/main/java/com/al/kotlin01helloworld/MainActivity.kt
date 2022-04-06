@@ -10,21 +10,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        // binding = ActivityMainBinding.inflate(layoutInflater)
+        // setContentView(binding.root)
         // 隐藏 ActionBar
         supportActionBar?.hide()
-        val myName = MyName("宋江", "及时雨")
 
-        //     with(binding) {
-        //         tvName.text = myName.name
-        //         tvNickname.text = myName.nickname
-        //     }
-        var dataBinding: ActivityMainBinding =
+        val dataBinding: ActivityMainBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_main)
-        dataBinding.myName = myName
-        // 直接用视图绑定的对象也可以
-        // binding.myName = myName
+        val dataObj = MyDataClass(0)
 
+
+        dataBinding.btnClick.setOnClickListener {
+            dataObj.counter++
+            // 容易忽视的重新绑定
+            dataBinding.tvShow.text = dataObj.counter.toString()
+        }
     }
 }
