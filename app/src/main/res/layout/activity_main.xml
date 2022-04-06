@@ -8,8 +8,8 @@
     <data>
 
         <variable
-            name="myName"
-            type="com.al.kotlin01helloworld.MyName" />
+            name="sourceObj"
+            type="com.al.kotlin01helloworld.MyDataClass" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="0"
+            android:text="@{String.valueOf(sourceObj.counter)}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

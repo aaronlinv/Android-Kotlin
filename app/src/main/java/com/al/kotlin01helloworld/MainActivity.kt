@@ -6,8 +6,6 @@ import androidx.databinding.DataBindingUtil
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // binding = ActivityMainBinding.inflate(layoutInflater)
@@ -18,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         val dataBinding: ActivityMainBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_main)
         val dataObj = MyDataClass(0)
-
+        dataBinding.sourceObj = dataObj
 
         dataBinding.btnClick.setOnClickListener {
             dataObj.counter++
