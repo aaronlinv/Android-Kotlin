@@ -2,6 +2,7 @@ package com.al.kotlin01helloworld
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -13,12 +14,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         // 隐藏 ActionBar
         supportActionBar?.hide()
-        val photoUrl =
-            "https://tenfei04.cfp.cn/creative/vcg/800/new/VCG211177178924.jpg"
-        binding.imageUrl = ""
+        val myName = MyName("宋江", "及时雨")
 
-        binding.btnLoad.setOnClickListener {
-            binding.imageUrl = photoUrl
-        }
+        //     with(binding) {
+        //         tvName.text = myName.name
+        //         tvNickname.text = myName.nickname
+        //     }
+        var dataBinding: ActivityMainBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_main)
+        dataBinding.myName = myName
+        // 直接用视图绑定的对象也可以
+        // binding.myName = myName
+
     }
 }
