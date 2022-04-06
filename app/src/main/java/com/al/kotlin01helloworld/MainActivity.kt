@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         dataBinding.btnClick.setOnClickListener {
             dataObj.counter++
             // 容易忽视的重新绑定
-            dataBinding.tvShow.text = dataObj.counter.toString()
+            // dataBinding.tvShow.text = dataObj.counter.toString()
         }
     }
 }
