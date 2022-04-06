@@ -1,28 +1,24 @@
 package com.al.kotlin01helloworld
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.al.kotlin01helloworld.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var tvCount: TextView
-    private lateinit var btnAdd: Button
-    private val myClass = MyClass()
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         // 隐藏 ActionBar
         supportActionBar?.hide()
-        tvCount = findViewById(R.id.tvCount)
-        btnAdd = findViewById(R.id.btnAdd)
-        btnAdd.setOnClickListener {
-            myClass.addCount()
-        }
-        myClass.counter.observe(this) {
-            tvCount.text = it.toString()
+        var counter = 0
+        with(binding) {
+            btnAdd.setOnClickListener {
+                counter++
+                tvCount.text = counter.toString()
+            }
         }
     }
 }
