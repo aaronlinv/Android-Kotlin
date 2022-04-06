@@ -15,6 +15,14 @@ class MainActivity : AppCompatActivity() {
 
         pager = findViewById(R.id.viewPager)
         // 实例化适配器对象给 ViewPager2
-        pager.adapter = MyPageAdapter(this)
+        pager.adapter = ImageViewPagerAdapter(createImageList())
+
+    }
+
+    private fun createImageList(): List<ImageItem> {
+        return listOf(
+            ImageItem("Forest", R.drawable.forst),
+            ImageItem("Mountain", R.drawable.mountain)
+        )
     }
 }
