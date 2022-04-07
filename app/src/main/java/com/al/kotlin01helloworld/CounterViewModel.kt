@@ -2,6 +2,7 @@ package com.al.kotlin01helloworld
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
 /**
  * <pre>
@@ -11,7 +12,7 @@ import androidx.lifecycle.MutableLiveData
  *     version: 1.0
  * </pre>
  */
-class MyClass {
+class CounterViewModel : ViewModel() {
     private val _counter: MutableLiveData<Int> = MutableLiveData(0)
 
     // 只读 LiveDate
@@ -19,6 +20,7 @@ class MyClass {
         get() = _counter
 
     fun addCount() {
-        _counter.value = _counter.value?.plus(1)
+        val currentValue = _counter.value ?: 0
+        _counter.value = currentValue + 1
     }
 }
