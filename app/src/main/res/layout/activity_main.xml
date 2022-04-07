@@ -8,8 +8,8 @@
     <data>
 
         <variable
-            name="sourceObj"
-            type="com.al.kotlin01helloworld.MyDataClass" />
+            name="myName"
+            type="com.al.kotlin01helloworld.MyName" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,31 +17,29 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <!-- 属性可以修改的话使用 @= -->
-        <EditText
-            android:id="@+id/etText"
+        <TextView
+            android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:ems="10"
-            android:inputType="text"
-            android:text="@={sourceObj.text}"
+            android:layout_marginTop="24dp"
+            android:text="@={myName.name}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvInfo"
+            android:id="@+id/tvNickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@{sourceObj.text}"
+            android:layout_marginTop="51dp"
+            android:text="@={myName.nickname}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etText" />
+            app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
