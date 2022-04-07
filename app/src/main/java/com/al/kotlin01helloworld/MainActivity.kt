@@ -3,6 +3,7 @@ package com.al.kotlin01helloworld
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -10,21 +11,32 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         // 隐藏 ActionBar
         supportActionBar?.hide()
-        val myName = MyName("宋江", "及时雨")
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        val rvItem = binding.rvItem
+        // 布局管理器
+        // 没有设置这个不会显示
+        rvItem.layoutManager = LinearLayoutManager(this)
 
-        //     with(binding) {
-        //         tvName.text = myName.name
-        //         tvNickname.text = myName.nickname
-        //     }
-        var dataBinding: ActivityMainBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_main)
-        dataBinding.myName = myName
-        // 直接用视图绑定的对象也可以
-        // binding.myName = myName
+        val myDataAdapter = MyDataAdapter(createItemList())
+        binding.rvItem.adapter = myDataAdapter
+    }
 
+    private fun createItemList(): List<MyData> {
+        return listOf(
+            MyData(10, "First"),
+            MyData(20, "First"),
+            MyData(30, "First"),
+            MyData(40, "First"),
+            MyData(50, "First"),
+            MyData(60, "First"),
+            MyData(70, "First"),
+            MyData(70, "First"),
+            MyData(70, "First"),
+            MyData(70, "First"),
+            MyData(70, "First"),
+            MyData(70, "First"),
+        )
     }
 }
