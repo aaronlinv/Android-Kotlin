@@ -5,6 +5,10 @@ plugins {
 
 android {
     compileSdk 31
+    viewBinding {
+        enabled = true
+    }
+
     dataBinding {
         enabled = true
     }
