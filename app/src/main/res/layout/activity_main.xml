@@ -17,28 +17,31 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <TextView
-            android:id="@+id/tvShow"
+        <!-- 属性可以修改的话使用 @= -->
+        <EditText
+            android:id="@+id/etText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="@{String.valueOf(sourceObj.counter)}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:ems="10"
+            android:inputType="text"
+            android:text="@={sourceObj.text}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnClick"
+        <TextView
+            android:id="@+id/tvInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="累加"
+            android:text="@{sourceObj.text}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvShow" />
+            app:layout_constraintTop_toBottomOf="@+id/etText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

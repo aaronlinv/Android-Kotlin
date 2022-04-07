@@ -15,13 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         val dataBinding: ActivityMainBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_main)
-        val dataObj = MyDataClass(0)
+        val dataObj = MyDataClass("双向绑定")
         dataBinding.sourceObj = dataObj
-
-        dataBinding.btnClick.setOnClickListener {
-            dataObj.counter++
-            // 容易忽视的重新绑定
-            // dataBinding.tvShow.text = dataObj.counter.toString()
-        }
     }
 }
