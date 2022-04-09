@@ -15,10 +15,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintBottom_toBottomOf="@+id/tvValue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/btnClick"
             app:layout_constraintStart_toEndOf="@+id/tvValue"
             app:layout_constraintTop_toTopOf="@+id/tvValue"
             app:layout_constraintVertical_bias="0.0" />
@@ -30,11 +29,22 @@
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
             android:text="TextView"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tvInfo"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/btnClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

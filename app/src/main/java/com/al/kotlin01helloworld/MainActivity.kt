@@ -6,7 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+// Recycle 的 Holder 一般数量会比较大，如果 new 监听器 会影响性能，一般用单例
+class MainActivity : AppCompatActivity(), MyClickListener {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         // 没有设置这个不会显示
         rvItem.layoutManager = LinearLayoutManager(this)
 
-        val myDataAdapter = MyDataAdapter(createItemList())
+        val myDataAdapter = MyDataAdapter(createItemList(), this)
         binding.rvItem.adapter = myDataAdapter
     }
 
@@ -38,5 +39,13 @@ class MainActivity : AppCompatActivity() {
             MyData(70, "First"),
             MyData(70, "First"),
         )
+    }
+
+    override fun onClickRow(id: Int) {
+        showToast(this, "onClickRow $id")
+    }
+
+    override fun onClickButtonInRow(message: String) {
+        showToast(this, "onClickButtonInRow $message")
     }
 }

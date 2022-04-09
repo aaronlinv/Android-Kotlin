@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -15,9 +16,10 @@ import androidx.recyclerview.widget.RecyclerView
  *     version: 1.0
  * </pre>
  */
-class MyDataAdapter(private val data: List<MyData>) : RecyclerView.Adapter<MyDataViewHolder>() {
+class MyDataAdapter(private val data: List<MyData>, val listener: MyClickListener?) :
+    RecyclerView.Adapter<MyDataViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyDataViewHolder {
-        return MyDataViewHolder.from(parent)
+        return MyDataViewHolder.from(parent, listener)
     }
 
     override fun onBindViewHolder(holder: MyDataViewHolder, position: Int) {
@@ -29,9 +31,11 @@ class MyDataAdapter(private val data: List<MyData>) : RecyclerView.Adapter<MyDat
     }
 }
 
-class MyDataViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class MyDataViewHolder private constructor(itemView: View, private val listener: MyClickListener?) :
+    RecyclerView.ViewHolder(itemView) {
     private val tvInfo: TextView = itemView.findViewById(R.id.tvInfo)
     private val tvValue: TextView = itemView.findViewById(R.id.tvValue)
+    private val btnClick: Button = itemView.findViewById(R.id.btnClick)
 
     fun bind(item: MyData) {
         tvInfo.text = item.info
@@ -41,13 +45,21 @@ class MyDataViewHolder private constructor(itemView: View) : RecyclerView.ViewHo
         } else {
             tvValue.setTextColor(Color.BLUE)
         }
+        if (listener != null) {
+            itemView.setOnClickListener {
+                listener.onClickRow(item.value)
+            }
+            btnClick.setOnClickListener {
+                listener.onClickButtonInRow(item.info)
+            }
+        }
     }
 
     companion object {
-        fun from(parent: ViewGroup): MyDataViewHolder {
+        fun from(parent: ViewGroup, listener: MyClickListener?): MyDataViewHolder {
             val layoutInflate = LayoutInflater.from(parent.context)
             val root = layoutInflate.inflate(R.layout.list_item, parent, false)
-            return MyDataViewHolder(root)
+            return MyDataViewHolder(root, listener)
         }
     }
 }
