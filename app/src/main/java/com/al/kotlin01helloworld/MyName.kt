@@ -3,12 +3,12 @@ package com.al.kotlin01helloworld
 /**
  * <pre>
  *     author : Aaron
- *     time   : 2022/04/07
+ *     time   : 2022/04/06
  *     desc   :
  *     version: 1.0
  * </pre>
  */
-class MyData(
-    val value: Int,
-    val info: String
+data class MyName(
+    var name: String = "",
+    var nickname: String = ""
 )
