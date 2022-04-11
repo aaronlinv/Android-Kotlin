@@ -14,5 +14,18 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        with(dataBinding) {
+            refreshLayout.setOnRefreshListener {
+                tvInfo.text = "正在刷新"
+                btnRefresh.isEnabled = true
+            }
+
+            btnRefresh.setOnClickListener {
+                tvInfo.text = "下拉刷新"
+                refreshLayout.isRefreshing = false
+                btnRefresh.isEnabled = false
+            }
+        }
     }
 }
