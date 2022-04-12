@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
-import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dataBinding: ActivityMainBinding
@@ -23,24 +22,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             btnRefresh.setOnClickListener {
-                MainScope().launch {
-                    val result = process()
-                    tvInfo.text = result
-                }
+                tvInfo.text = "下拉刷新"
+                refreshLayout.isRefreshing = false
+                btnRefresh.isEnabled = false
             }
-        }
-
-        // 测试协程
-        MainScope().launch {
-            delay(1000)
-            dataBinding.tvInfo.text = "Coroutine 线程名称：${Thread.currentThread().name}"
-        }
-    }
-
-    // 编写可挂起的函数
-    private suspend fun process(): String {
-        return withContext(Dispatchers.IO) {
-            "Coroutine 使用线程：${Thread.currentThread().name}"
         }
     }
 }
