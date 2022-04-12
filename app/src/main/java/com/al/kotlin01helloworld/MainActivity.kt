@@ -5,7 +5,11 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,7 +29,8 @@ class MainActivity : AppCompatActivity() {
 
         }
         dataBinding.btnLoad.setOnClickListener {
-            getNewestImageUseCallback()
+            // getNewestImageUseCallback()
+            getNewestImageUseCoroutine()
         }
     }
 
@@ -71,6 +76,40 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    // 异步任务
+    private suspend fun getImageItem(): Int {
+        // 切换到 IO 线程
+        return withContext(Dispatchers.IO) {
+            imageServer.getImageCount2().body()?.imageCount ?: 0
+        }
+    }
+
+    private suspend fun getImageUseCoroutine(imageName: String): Bitmap? {
+        return withContext(Dispatchers.IO) {
+            val result = imageServer.getImage2(imageName)
+            var bitmap: Bitmap? = null
+            // use 关闭的时候自动关闭流
+            result.body()?.byteStream()?.use {
+                bitmap = BitmapFactory.decodeStream(it)
+            }
+            bitmap
+        }
+    }
+
+    private fun getNewestImageUseCoroutine() {
+        // Lifecycle 被销毁时，运行的任务会被取消
+        lifecycleScope.launch {
+            val imageCount = getImageItem()
+            if (imageCount != 0) {
+                val imageName = "image_$imageCount.jpg"
+                myLog("图片：$imageName")
+                dataBinding.tvUrl.text = imageName
+                val bitmap = getImageUseCoroutine(imageName)
+                dataBinding.ivImage.setImageBitmap(bitmap)
+            }
+        }
     }
 
     private fun showInfo(message: String) {
