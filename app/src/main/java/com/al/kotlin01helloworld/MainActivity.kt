@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
@@ -18,6 +19,8 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     private lateinit var dataBinding: ActivityMainBinding
     private val imageServer: MyImageServer = MyImageServer.imageServer
+    private var downloadCounter: Int = 0
+    private val images: MutableList<Bitmap> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,12 +28,18 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        with(dataBinding) {
-
-        }
         dataBinding.btnLoad.setOnClickListener {
             // getNewestImageUseCallback()
-            getNewestImageUseCoroutine()
+            // getNewestImageUseCoroutine()
+            if (images.size > 0) {
+                val index = downloadCounter % images.size
+                dataBinding.tvUrl.text = "显示第 ${index + 1} 张图片"
+                dataBinding.ivImage.setImageBitmap(images[index])
+                downloadCounter++
+            } else {
+                it.isEnabled = false
+                downloadImage()
+            }
         }
     }
 
@@ -108,6 +117,35 @@ class MainActivity : AppCompatActivity() {
                 dataBinding.tvUrl.text = imageName
                 val bitmap = getImageUseCoroutine(imageName)
                 dataBinding.ivImage.setImageBitmap(bitmap)
+            }
+        }
+    }
+
+    private fun downloadImage() {
+        lifecycleScope.launch {
+            val imageCount = getImageItem()
+            if (imageCount > 0) {
+                repeat(imageCount) {
+                    var imageName = ""
+                    val index = it + 1
+                    if (index < 10) {
+                        imageName = "image_0$index.jpg"
+                    } else {
+                        imageName = "image_$index.jpg"
+                    }
+                    myLog("图片：$imageName")
+
+                    val bitmap = async {
+                        getImageUseCoroutine(imageName)
+                    }.await()
+                    bitmap?.let {
+                        images.add(it)
+                        dataBinding.tvUrl.text = "已下载图片：${++downloadCounter}"
+                    }
+                }
+                dataBinding.tvUrl.text = "图片下载完毕"
+                dataBinding.btnLoad.text = "切换显示图片"
+                dataBinding.btnLoad.isEnabled = true
             }
         }
     }
