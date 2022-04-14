@@ -3,7 +3,11 @@ package com.al.kotlin01helloworld
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dataBinding: ActivityMainBinding
@@ -15,17 +19,34 @@ class MainActivity : AppCompatActivity() {
 
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        with(dataBinding) {
-            refreshLayout.setOnRefreshListener {
-                tvInfo.text = "正在刷新"
-                btnRefresh.isEnabled = true
-            }
+        useMainScope()
+        useLifecycleScope()
+        val vm = ViewModelProvider(this).get(MyViewModel::class.java)
+        vm.useCoroutine()
 
-            btnRefresh.setOnClickListener {
-                tvInfo.text = "下拉刷新"
-                refreshLayout.isRefreshing = false
-                btnRefresh.isEnabled = false
-            }
+    }
+
+    private fun useMainScope() {
+        MainScope().launch {
+            myLog("MainScope() 中启动协程：${Thread.currentThread().name}")
+        }
+    }
+
+    private fun useLifecycleScope() {
+        lifecycleScope.launch {
+            myLog("lifecycleScope 中启动协程：${Thread.currentThread().name}")
+        }
+
+        lifecycleScope.launchWhenStarted {
+            myLog("launchWhenStarted 中启动协程：${Thread.currentThread().name}")
+        }
+
+        lifecycleScope.launchWhenCreated {
+            myLog("launchWhenCreated 中启动协程：${Thread.currentThread().name}")
+        }
+
+        lifecycleScope.launchWhenResumed {
+            myLog("launchWhenResumed 中启动协程：${Thread.currentThread().name}")
         }
     }
 }
