@@ -4,12 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dataBinding: ActivityMainBinding
-    private var dbHelper = MyDBHelper(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 隐藏 ActionBar
@@ -18,33 +16,16 @@ class MainActivity : AppCompatActivity() {
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         with(dataBinding) {
-            tvInfo.text = "数据库版本：${MyDBHelper.VERSION}"
-
-            btnInsert.setOnClickListener {
-                MainScope().launch {
-                    val db = dbHelper.writableDatabase
-                    val insertResult = if (MyDBHelper.VERSION == 1) {
-                        dbHelper.insertData(db, "First", 18)
-                    } else {
-                        dbHelper.insertData2(db, "First", 18, 20)
-                    }
-                    // db.close()
-                    tvInfo.text = insertResult.toString()
-                }
+            refreshLayout.setOnRefreshListener {
+                tvInfo.text = "正在刷新"
+                btnRefresh.isEnabled = true
             }
-            btnShow.setOnClickListener {
-                MainScope().launch {
-                    val db = dbHelper.readableDatabase
-                    val result = dbHelper.query(db)
-                    // db.close()
-                    tvInfo.text = result
-                }
+
+            btnRefresh.setOnClickListener {
+                tvInfo.text = "下拉刷新"
+                refreshLayout.isRefreshing = false
+                btnRefresh.isEnabled = false
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        dbHelper.close()
     }
 }
