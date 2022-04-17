@@ -3,11 +3,13 @@ package com.al.kotlin01helloworld
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
 import com.al.kotlin01helloworld.db.MyDatabase
-import com.al.kotlin01helloworld.helper.DbHelper
-import kotlin.concurrent.thread
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dataBinding: ActivityMainBinding
@@ -35,26 +37,34 @@ class MainActivity : AppCompatActivity() {
 
         with(dataBinding) {
             btnRefresh.setOnClickListener {
-                addToDb()
+                // useList()
+                // useLiveData()
+                collectFlow()
             }
         }
     }
 
-    fun addToDb() {
-        thread {
-            val obj = DbHelper.createExampleMyData()
-            // 插入数据
-            db.myDataDao().add(obj)
-
-            // 取出所有记录
-            val allData = db.myDataDao().getAll()
-
+    private fun useList() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val all = db.myDataDao().getAll()
             runOnUiThread {
-                dataBinding.tvInfo.text = "$obj 已经插入"
-                dataBinding.tvInfo.append("============================\n")
-                allData.forEach {
-                    dataBinding.tvInfo.append("\n$it \n")
-                }
+                dataBinding.tvInfo.text = all.toString()
+            }
+        }
+    }
+
+    private fun useLiveData() {
+        val all = db.myDataDao().getAllReturnLiveData()
+        all.observe(this) {
+            dataBinding.tvInfo.text = it.toString()
+        }
+    }
+
+    private fun collectFlow() {
+        lifecycleScope.launch {
+            val all = db.myDataDao().getAllReturnFlow()
+            all.collect {
+                dataBinding.tvInfo.text = it.toString()
             }
         }
     }
