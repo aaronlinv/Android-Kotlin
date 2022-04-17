@@ -1,9 +1,5 @@
 package com.al.kotlin01helloworld
 
-import android.net.ConnectivityManager
-import android.net.Network
-import android.net.NetworkCapabilities
-import android.net.NetworkRequest
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -26,50 +22,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             btnRefresh.setOnClickListener {
-                checkNetworkState()
+                tvInfo.text = "下拉刷新"
+                refreshLayout.isRefreshing = false
+                btnRefresh.isEnabled = false
             }
-        }
-    }
-
-    val callback = object : ConnectivityManager.NetworkCallback() {
-        override fun onAvailable(network: Network) {
-            super.onAvailable(network)
-            showInfo("网络已连接")
-        }
-
-        override fun onLost(network: Network) {
-            super.onLost(network)
-            showInfo("网络已断开")
-        }
-
-        override fun onCapabilitiesChanged(
-            network: Network,
-            networkCapabilities: NetworkCapabilities
-        ) {
-            super.onCapabilitiesChanged(network, networkCapabilities)
-            val info = if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                "onCapabilitiesChanged:wifi"
-            } else if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-                "onCapabilitiesChanged:蜂窝网络"
-            } else {
-                "onCapabilitiesChanged:其他网路"
-            }
-            showInfo(info)
-        }
-    }
-
-    private fun checkNetworkState() {
-        // 获取对象
-        val connMgr = getSystemService(ConnectivityManager::class.java)
-        // 注册监听器对象
-        val request = NetworkRequest.Builder().build()
-        connMgr?.registerNetworkCallback(request, callback)
-        dataBinding.tvInfo.text = "网络监听已启动"
-    }
-
-    private fun showInfo(info: String) {
-        runOnUiThread {
-            dataBinding.tvInfo.text = info
         }
     }
 }
