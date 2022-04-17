@@ -4,8 +4,9 @@ import com.al.kotlin01helloworld.entity.MyData
 
 class DbHelper {
     companion object {
+        var id: Int = 0
         fun createExampleMyData(): MyData {
-            return MyData(1, "First")
+            return MyData(id++, "First")
         }
     }
 }
