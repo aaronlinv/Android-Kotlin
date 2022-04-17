@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dataBinding: ActivityMainBinding
@@ -23,8 +24,12 @@ class MainActivity : AppCompatActivity() {
 
             btnRefresh.setOnClickListener {
                 tvInfo.text = "下拉刷新"
-                refreshLayout.isRefreshing = false
-                btnRefresh.isEnabled = false
+                thread {
+                    val result = getUrlString("https://www.baidu.com")
+                    runOnUiThread {
+                        dataBinding.tvInfo.text = "收到字节：${result.length} \n $result"
+                    }
+                }
             }
         }
     }
