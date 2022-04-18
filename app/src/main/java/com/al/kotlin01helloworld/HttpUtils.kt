@@ -1,5 +1,7 @@
 package com.al.kotlin01helloworld
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.net.HttpURLConnection
@@ -15,7 +17,7 @@ import java.net.URL
  */
 
 // 获取指定 url 资源，并将其转为字符串
-fun getUrlString(url: String): String {
+fun getUrlString(url: String): ByteArray {
     val url = URL(url)
     val connection = url.openConnection() as HttpURLConnection
     try {
@@ -35,10 +37,18 @@ fun getUrlString(url: String): String {
                     }
                 } while (bytesRead > 0)
             }
-            val bytes = out.toByteArray()
-            return String(bytes)
+            return out.toByteArray()
         }
     } finally {
         connection.disconnect()
+    }
+}
+
+fun getUrlImage(url: String): Bitmap? {
+    return try {
+        val data = getUrlString(url)
+        return BitmapFactory.decodeByteArray(data, 0, data.size)
+    } catch (ex: Exception) {
+        null
     }
 }

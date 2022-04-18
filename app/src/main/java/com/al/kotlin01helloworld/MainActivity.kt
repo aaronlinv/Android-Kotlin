@@ -23,11 +23,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             btnRefresh.setOnClickListener {
-                tvInfo.text = "下拉刷新"
+                val url = "https://jinxuliang.com/openservice/api/imageservice/image_23.jpg"
                 thread {
-                    val result = getUrlString("https://www.baidu.com")
+                    val image = getUrlImage(url)
                     runOnUiThread {
-                        dataBinding.tvInfo.text = "收到字节：${result.length} \n $result"
+                        if (image == null) {
+                            dataBinding.tvInfo.text = "图片下载失败"
+                        } else {
+                            ivImage.setImageBitmap(image)
+                        }
                     }
                 }
             }
