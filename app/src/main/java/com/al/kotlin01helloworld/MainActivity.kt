@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
-import kotlin.concurrent.thread
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dataBinding: ActivityMainBinding
@@ -24,14 +25,13 @@ class MainActivity : AppCompatActivity() {
 
             btnRefresh.setOnClickListener {
                 val url = "https://jinxuliang.com/openservice/api/imageservice/image_23.jpg"
-                thread {
+                MainScope().launch {
                     val image = getUrlImage(url)
-                    runOnUiThread {
-                        if (image == null) {
-                            dataBinding.tvInfo.text = "图片下载失败"
-                        } else {
-                            ivImage.setImageBitmap(image)
-                        }
+                    if (image != null) {
+                        val blackWhiteImage = changeToBlackWhite(image)
+                        ivImage.setImageBitmap(blackWhiteImage)
+                    } else {
+                        dataBinding.tvInfo.text = "图片下载失败"
                     }
                 }
             }
