@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dataBinding: ActivityMainBinding
@@ -24,16 +22,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             btnRefresh.setOnClickListener {
-                val url = "https://jinxuliang.com/openservice/api/imageservice/image_23.jpg"
-                MainScope().launch {
-                    val image = getUrlImage(url)
-                    if (image != null) {
-                        val blackWhiteImage = changeToBlackWhite(image)
-                        ivImage.setImageBitmap(blackWhiteImage)
-                    } else {
-                        dataBinding.tvInfo.text = "图片下载失败"
-                    }
-                }
+                tvInfo.text = "下拉刷新"
+                refreshLayout.isRefreshing = false
+                btnRefresh.isEnabled = false
             }
         }
     }
