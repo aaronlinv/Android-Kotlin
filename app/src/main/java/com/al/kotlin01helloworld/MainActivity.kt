@@ -4,6 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -13,6 +17,7 @@ import kotlin.concurrent.thread
 class MainActivity : AppCompatActivity() {
     private lateinit var dataBinding: ActivityMainBinding
     private val server: MyWebServer = MyWebServer.server
+    private val listServer: MyListServer = MyListServer.server
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +45,20 @@ class MainActivity : AppCompatActivity() {
             btnLogin.setOnClickListener {
                 testLogin()
             }
+            btnRoutine.setOnClickListener {
+                CoroutineScope(Dispatchers.Main).launch {
+                    val result = withContext(Dispatchers.IO) {
+                        testRoutine()
+                    }
+                    dataBinding.tvInfo.text = result.toString()
+                }
+            }
         }
+    }
+
+    private suspend fun testRoutine(): List<MyData> {
+        val response = listServer.getMyDataList(5)
+        return response.body() ?: emptyList()
     }
 
 
