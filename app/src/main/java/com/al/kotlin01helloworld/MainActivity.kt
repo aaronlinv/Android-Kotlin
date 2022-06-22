@@ -1,9 +1,11 @@
 package com.al.kotlin01helloworld
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
+import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dataBinding: ActivityMainBinding
@@ -15,17 +17,13 @@ class MainActivity : AppCompatActivity() {
 
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        with(dataBinding) {
-            refreshLayout.setOnRefreshListener {
-                tvInfo.text = "正在刷新"
-                btnRefresh.isEnabled = true
-            }
+        Glide.with(this)
 
-            btnRefresh.setOnClickListener {
-                tvInfo.text = "下拉刷新"
-                refreshLayout.isRefreshing = false
-                btnRefresh.isEnabled = false
-            }
+        dataBinding.btnDownload.setOnClickListener {
+            Glide
+                .with(this)
+                .load(Uri.parse("https://jinxuliang.com/images/image_01.jpg"))
+                .into(dataBinding.imageView)
         }
     }
 }
