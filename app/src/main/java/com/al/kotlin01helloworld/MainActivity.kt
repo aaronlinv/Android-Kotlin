@@ -1,31 +1,19 @@
 package com.al.kotlin01helloworld
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.al.kotlin01helloworld.adapter.ImageListAdapter
 import com.al.kotlin01helloworld.databinding.ActivityMainBinding
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.util.*
+import com.al.kotlin01helloworld.download.loadImages
+import com.al.kotlin01helloworld.model.WebImage
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dataBinding: ActivityMainBinding
-    private val IMAGE_DIRECTOR = "IMAGE_DIRECTOR"
-
+    private var adapter: ImageListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,63 +22,43 @@ class MainActivity : AppCompatActivity() {
 
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        Glide.with(this)
 
-        dataBinding.btnDownload.setOnClickListener {
-            Glide
-                .with(this)
-                .load(Uri.parse("https://jinxuliang.com/images/image_01.jpg"))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+        dataBinding.imageListView.layoutManager = LinearLayoutManager(this)
 
-                // 请求监听器
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        Toast.makeText(this@MainActivity, "请求失败", Toast.LENGTH_SHORT).show()
-                        return true
-                    }
-
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        Toast.makeText(this@MainActivity, "资源准备完毕", Toast.LENGTH_SHORT).show()
-                        resource?.let {
-                            val bitmap = resource.toBitmap()
-                            val imagePath = saveImageToInternalStorage(bitmap)
-                            // /data/user/0/com.al.kotlin01helloworld/app_IMAGE_DIRECTOR/818f416d-f0db-47d8-b731-4695e8034941.jpg
-                            Log.d("Glide", imagePath)
-                        }
-                        return false
-                    }
-
-                })
-                .into(dataBinding.imageView)
+        dataBinding.btnLoad.setOnClickListener {
+            downloadImageList()
+        }
+        dataBinding.btnClear.setOnClickListener {
+            adapter?.clear()
         }
     }
 
-    private fun saveImageToInternalStorage(bitmap: Bitmap): String {
-        var file = getDir(IMAGE_DIRECTOR, Context.MODE_PRIVATE)
-        file = File(file, "${UUID.randomUUID()}.jpg")
-        try {
-            val stream = FileOutputStream(file)
-            stream.use {
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-                stream.flush()
+    private fun getImageUrlList(): List<String> {
+        val list = arrayListOf<String>()
+        for (i in 1..9) {
+            // https://jinxuliang.com/images/image_01
+            val url = "$WEB_IMAGE_BASE_URL/image_0$i.jpg"
+            list.add(url)
+        }
+        return list
+    }
+
+    private fun downloadImageList() {
+        lifecycleScope.launch {
+            val imageUrlList = getImageUrlList()
+
+            val imageMap = loadImages(
+                this@MainActivity,
+                imageUrlList
+            )
+
+            val list = ArrayList<WebImage>()
+            imageMap.forEach {
+                list.add(WebImage(it.key, it.value))
             }
 
-        } catch (e: IOException) {
-            e.printStackTrace()
+            adapter = ImageListAdapter(list)
+            dataBinding.imageListView.adapter = adapter
         }
-        return file.absolutePath
     }
-
-
 }
